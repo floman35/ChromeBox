@@ -1,13 +1,13 @@
 #Chrome extension test
 
 *This project has for purpose to test the following technologies*
-*Chrome extension
-*AngularJS
-*Grunt
-*IndexedDB (intern storage)
-*pdfjs (generation of pdf)
+- Chrome extension
+- AngularJS
+- Grunt
+- IndexedDB (intern storage)
+- pdfjs (generation of pdf)
 
-## Extension Goals
+## App Goals
 - Automatic data extraction from webpage
 - Internal storage of extracted data
 - Staring saved data option
