@@ -1,15 +1,37 @@
 #Chrome Extension Test
 
 *This project has for purpose to test the following technologies*
-- Chrome extension
+- Chrome Extension
 - AngularJS
 - IndexedDB (intern storage)
-- pdfjs (generation of pdf)
+- Pdfmake (generation of pdf)
+- Grunt
+- Bootstrap
 
 ## App Goals
-- Automatic data extraction from webpage
-- Internal storage of extracted data
-- Staring saved data option
-- Retrieving data from internal storage and auto-generation of pdf file
+- Automatic content extraction from webpage.
+- Storage in browser database (IndexedDB).
+- Organizing saved content.
+- Research in saved content.
+- Generation of pdf file from page's content.
 
-[project generated from Yeoman - generator-chrome-extension](https://github.com/yeoman/generator-chrome-extension)
+## ChromeBox
+![alt text](app/images/search.JPG "App")
+
+### 1- Installation
+
+* Visit chrome://extensions in your browser.
+
+* Ensure that the Developer mode checkbox in the top right-hand corner is checked.
+
+* Click Load unpacked extension… to pop up a file-selection dialog.
+
+* Navigate to the directory in which your extension files live, and select it.
+
+### Usage
+
+
+
+### Links
+
+![alt text](app/images/icon-38.png "Logo Title Text 1") [Project generated from Yeoman - generator-chrome-extension](https://github.com/yeoman/generator-chrome-extension)

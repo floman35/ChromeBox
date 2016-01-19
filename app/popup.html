@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="chromeBox" ng-controller="popupCtrl" ng-csp>
   <head>
     <meta charset="utf-8">
     <!-- build:css styles/popup-vendor.css -->
@@ -7,19 +7,158 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
-    <link href="styles/main.css" rel="stylesheet">
+	<link rel="stylesheet" href="styles/main.css"/>
+  <link rel="stylesheet" href="styles/angular-csp.css"/>
     <!-- endbuild -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <script src = "bower_components/angular/angular.js"> </script>
+    <script src = "bower_components/pdfmake/build/pdfmake.js"> </script>
+    <script src = "bower_components/pdfmake/build/vfs_fonts.js"> </script>
+
   </head>
   <body>
-    <h1>'Allo, 'Allo!</h1>
+    <div class="container">
+		<div class="row header">
+			<div class="col-md-10 col-md-offset-1">
+				<h2><strong>Chrome Box</strong></h2>
+			</div>
+		</div>
 
-    <!-- build:js scripts/popup-vendor.js -->
-    <!-- bower:js -->
-    <!-- endbower -->
-    <!-- endbuild -->
+  	<div class="row">
+      <!-- Notification-->
+        <h4 ng-show="handler.notify.show" class="bg-info text-center notify">
+          <strong>{{handler.notify.title}} ! </strong>
+          {{handler.notify.text}}
+        </h4>
 
-    <!-- build:js scripts/popup.js -->
-    <script src="scripts/popup.js"></script>
-    <!-- endbuild -->
+			<div class="col-md-10 col-md-offset-1">
+		    <!-- Pages in memory-->
+			    <h2 class="text-muted">Pages in Memory</h2>
+
+        <!-- Research in saved pages-->
+          <input type="search" class="form-control" placeholder="Page Search" ng-model="pageSearch.title">
+          <p class="text-muted text-right">{{searchedPages.length}} of {{$root.websites.length}} records</p>
+          <!-- research results-->
+          <div ng-show="searchedPages.length<10 && pageSearch.title.length!=0">
+            <div ng-repeat="page in $root.websites | filter : pageSearch as searchedPages" class="ellipsis">
+              <div class="btn-group" role="group" >
+                <button type="button" class="btn btn-default" aria-label="Print pdf" ng-click="handler.changeStatus(page.id, 'printed')">
+                  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                </button>
+                <a type="button" class="btn btn-default" aria-label="Open URL" href="" ng-click="handler.openLink(page.url)">
+                  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                </a>
+                <button type="button" class="btn btn-default" aria-label="Delete" ng-click="handler.deletePage(page.id)">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button>
+              </div>
+                {{page.title}}
+            </div>
+          </div>
+
+		        <!-- Saved pages-->
+              <h3 class="text-muted">
+                <a href ng-click="handler.showSaved()" class="no-decor">
+                  Saved <small> - {{savedPages.length}} pages </small>
+                </a>
+              </h3>
+              <div ng-show="handler.savedPagesShow">
+                <div ng-repeat="(key, page) in $root.websites | filter : {status:'saved'} | orderBy:'-date' as savedPages" class="ellipsis">
+                  <div class="btn-group" role="group" >
+                    <button type="button" class="btn btn-default" aria-label="Print pdf" ng-click="handler.changeStatus(page.id, 'printed')">
+                      <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Archive" ng-click="handler.changeStatus(page.id, 'archived')">
+                      <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                    <a type="button" class="btn btn-default" aria-label="Open URL" href="" ng-click="handler.openLink(page.url)">
+                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                    </a>
+                    <button type="button" class="btn btn-default" aria-label="Delete" ng-click="handler.deletePage(page.id)">
+                      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                    {{page.title}}
+                </div>
+              </div>
+
+            <!-- Printed pages-->
+              <h3 class="text-muted">
+                <a href ng-click="handler.showPrinted()" class="no-decor">
+                  Printed <small> - {{printedPages.length}} pages</small>
+                </a>
+              </h3>
+              <div ng-show="handler.printedPagesShow">
+                <div ng-repeat="(key, page) in $root.websites | filter : {status:'printed'} | orderBy:'-date' as printedPages" class="ellipsis">
+                  <div class="btn-group" role="group" >
+                    <button type="button" class="btn btn-default" aria-label="Print pdf" ng-click="handler.changeStatus(page.id, 'printed')">
+                      <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Archive" ng-click="handler.changeStatus(page.id, 'archived')">
+                      <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    </button>
+                    <a type="button" class="btn btn-default" aria-label="Open URL" href="" ng-click="handler.openLink(page.url)">
+                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                    </a>
+                    <button type="button" class="btn btn-default" aria-label="Delete" ng-click="handler.deletePage(page.id)">
+                      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  {{page.title}}
+                </div>
+              </div>
+            <!-- Archived pages-->
+              <h3 class="text-muted">
+                <a href ng-click="handler.showArchived()" class="no-decor">
+                  Archived <small> - {{archivedPages.length}} pages</small>
+                </a>
+              </h3>
+              <div ng-show="handler.archivedPagesShow">
+                <div ng-repeat="(key, page) in $root.websites | filter : {status:'archived'} | orderBy:'-date' as archivedPages"  class="ellipsis">
+                  <div class="btn-group" role="group" >
+                    <button type="button" class="btn btn-default" aria-label="Print pdf" ng-click="handler.changeStatus(page.id, 'printed')">
+                      <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                    </button>
+                    <a type="button" class="btn btn-default" aria-label="Open URL" href="" ng-click="handler.openLink(page.url)">
+                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                    </a>
+                    <button type="button" class="btn btn-default" aria-label="Delete" ng-click="handler.deletePage(page.id)">
+                      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  {{page.title}}
+                </div>
+              </div>
+            <hr>
+
+        <!-- Inspect current page-->
+          <h2 class="text-muted">Current page</h2>
+            <!-- Current page title and logo-->
+    				<span ng-show="webpage.title">
+    					<img ng-hide="!webpage.logo" ng-src="{{webpage.logo}}" class="img-responsive" style="max-height:50px; float:left">
+            			<h4 style="margin-left: 60px;"><strong>{{webpage.title}}</strong></h4>
+    					<br>
+    				</span>
+            <!-- Action button -->
+    		      <button ng-hide="webpage.page.length>0" type = "button" class="btn btn-default btn-block"  ng-click = "currentPage.getData()" >Analyze page</button>
+      				<button ng-hide="webpage.page.length<1" type = "button" class="btn btn-default btn-block"  ng-click = "currentPage.saveData()" >
+                <span ng-if="webpage.id==null">Save page details &#32<span class="badge">{{webpage.page.length}}</span></span>
+                <span ng-if="webpage.id!=null">Update page</span>
+              </button>
+      				<button ng-hide="webpage.page.length<1" type = "button" class="btn btn-default btn-block"  ng-click = "currentPage.print()" >Print page detail <em>(pdfmake)</em></button>
+              <br>
+	</div>
+	<footer class="footer" >
+		<div class="container">
+			<p>Test Projects 2016 - Florent Balac</p>
+		</div>
+	</footer>
+
+
   </body>
+  <script src = "scripts/app.js" > </script>
+  <script src = "scripts/config/config.js"></script>
+  <script src = "scripts/services/indexeddb.js"></script>
+  <script src = "scripts/services/pdfmakerService.js"></script>
+  <script src = "scripts/controllers/popup.js"></script>
 </html>

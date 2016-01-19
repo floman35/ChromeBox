@@ -1,3 +1,52 @@
 body {
-  padding: 20px;
+	width: 400px;
+}
+
+.header {
+	background: #4393B9;
+	color: #F5F5F5;
+	text-align: center;
+	padding-bottom: 5px;
+}
+
+
+.footer {
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: #4393A1;
+	color: #F5F5F5;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+	width: 90vw;
+	background: #ccffff;
+	color:  #262626;
+	margin: 5px;
+	border-style: solid;
+ 	border-width: 1px;
+	border-color: #00cccc;
+	&:hover {
+    color: #555 !important;
+    font-weight: bold !important;
+  }
+}
+.no-decor{
+  text-decoration: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.notify {
+	text-align: center;
+	padding-bottom: 5px;
+  padding-top: 5px;
+	margin-top: 0px;
+	color:  #303030 ;
 }

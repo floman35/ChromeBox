@@ -1,10 +1,9 @@
 {
   "name": "ChromeBox",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "manifest_version": 2,
   "description": "Test extension",
   "icons": {
-    "16": "images/icon-16.png",
     "128": "images/icon-128.png"
   },
   "default_locale": "en",
@@ -26,15 +25,13 @@
         "https://*/*"
       ],
       "js": [
+        "bower_components/jquery/dist/jquery.min.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end",
       "all_frames": false
     }
   ],
-  "omnibox": {
-    "keyword": "OMNIBOX-KEYWORD"
-  },
   "browser_action": {
     "default_icon": {
       "19": "images/icon-19.png",

@@ -18,6 +18,7 @@
   "unused": true,
   "strict": true,
   "globals" : {
+    "$": false,
     "chrome": true,
     "crypto": true
   }
