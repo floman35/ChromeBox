@@ -20,6 +20,8 @@
 
 ### 1- Installation
 
+*Install package.json*
+
 * Visit chrome://extensions in your browser.
 
 * Ensure that the Developer mode checkbox in the top right-hand corner is checked.
@@ -30,7 +32,14 @@
 
 ### Usage
 
+* Using watch to update source continuously
+```javascript
+grunt watch
+```
 
+### To Do
+
+* Image handling (Convertion to URI/ Saving in indexedDB)
 
 ### Links
 
