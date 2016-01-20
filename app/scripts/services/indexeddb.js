@@ -89,7 +89,7 @@ angular.module('chromeBox')
         // Unsuccessfull request
           checkRequest.onerror = function(e) {
             console.log('Error while checking if existing job');
-            d.reject(null);
+            d.reject(e);
           };
         //Return promise
           return d.promise;
@@ -158,7 +158,7 @@ angular.module('chromeBox')
             // update request
               var request = store.put(requestedPage);
 
-               request.onsuccess = function(e) {
+               request.onsuccess = function() {
                   var pageIndex=findWithAttr($rootScope.websites, 'id', indexedDBId);
                   $rootScope.websites[pageIndex].status=newStatus;
                   d.resolve(requestedPage);
